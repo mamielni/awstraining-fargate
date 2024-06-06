@@ -6,13 +6,16 @@ import com.awstraining.backend.api.rest.v1.model.SentMessage;
 import com.awstraining.backend.business.notifyme.NotifyMeDO;
 import com.awstraining.backend.business.notifyme.NotifyMeService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
 // TODO: lab1
 //  1. Create RestController "notification/v1".
 //  2. Familiarize yourself with api, open-api contract, how it is generated?
-@RestController("notification/v1")
+@RestController
+@RequestMapping("notification/v1")
 public class NotifyMeController implements NotifyMeApi {
 
     private NotifyMeService notifyMeService;
@@ -29,7 +32,7 @@ public class NotifyMeController implements NotifyMeApi {
     //  1. Implement notifyMe method. 
     //  Method should return Http 200 and content of sent message to subscribers.
     @Override
-    public ResponseEntity<SentMessage> notifyMe(NotifyMe notifyMe) {
+    public ResponseEntity<SentMessage> notifyMe(@RequestBody NotifyMe notifyMe) {
         final NotifyMeDO notifyMeDO = map(notifyMe);
         String text = notifyMeService.notifyMe(notifyMeDO);
         return ResponseEntity.ok(map(text));
